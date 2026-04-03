@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Chatbot</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.chat-container {
+  width: 400px;
+  height: 600px;
+  background: #1e293b;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  padding: 15px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Chat area */
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Message */
+.msg {
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 15px;
+  max-width: 75%;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* User (right) */
+.user {
+  background: #3b82f6;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+/* Bot (left) */
+.bot {
+  background: #334155;
+  color: white;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+/* Input */
+.input-box {
+  display: flex;
+  padding: 10px;
+  background: #0f172a;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+button {
+  margin-left: 10px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+  <div class="header">🤖 AI Study Chatbot</div>
+
+  <div id="chat" class="chat-box"></div>
+
+  <div class="input-box">
+    <input id="q" placeholder="Ask something..." onkeydown="handleEnter(event)">
+    <button onclick="ask()">Send</button>
+  </div>
+</div>
+
+<script>
+
+function handleEnter(e){
+  if(e.key === "Enter"){
+    ask();
+  }
+}
+
+async function ask() {
+  let input = document.getElementById("q");
+  let chat = document.getElementById("chat");
+
+  let question = input.value.trim();
+  if (!question) return;
+
+  // User message
+  let userMsg = document.createElement("div");
+  userMsg.className = "msg user";
+  userMsg.innerText = question;
+  chat.appendChild(userMsg);
+
+  input.value = "";
+
+  // Loader
+  let loading = document.createElement("div");
+  loading.className = "msg bot";
+  loading.innerText = "Typing...";
+  chat.appendChild(loading);
+
+  chat.scrollTop = chat.scrollHeight;
+
+  try {
+    let res = await fetch(`/chat?q=${question}`);
+    let data = await res.json();
+
+    chat.removeChild(loading);
+
+    let botMsg = document.createElement("div");
+    botMsg.className = "msg bot";
+    botMsg.innerText = data.answer || "No response";
+    chat.appendChild(botMsg);
+
+  } catch (error) {
+    chat.removeChild(loading);
+
+    let errorMsg = document.createElement("div");
+    errorMsg.className = "msg bot";
+    errorMsg.innerText = "Error connecting to server";
+    chat.appendChild(errorMsg);
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+</script>
+
+</body>
+</html>
