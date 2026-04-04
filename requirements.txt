@@ -2,9 +2,7 @@ fastapi==0.110.0
 uvicorn==0.29.0
 pydantic==2.7.1
 
-scikit-learn==1.7.2
-numpy==1.26.4
-pandas==2.2.2
+
 joblib==1.4.2
 
 python-dotenv==1.0.1
@@ -16,3 +14,6 @@ sqlalchemy==2.0.30
 psycopg2-binary==2.9.9
 
 requests==2.31.0
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.4.2
