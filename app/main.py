@@ -11,6 +11,11 @@ app = FastAPI(title="Career Prediction API 🚀")
 
 Base.metadata.create_all(bind=engine)
 
+
+import os
+
+os.makedirs("app/uploads", exist_ok=True)
+
 @app.get("/")
 def home():
     return {"message": "API Running 🚀"}
