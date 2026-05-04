@@ -12,7 +12,7 @@ def get_chatbot_response(question: str):
 
     res = requests.post(URL, json=data)
     result = res.json()
-
+    
     try:
         return result["candidates"][0]["content"]["parts"][0]["text"]
     except:
