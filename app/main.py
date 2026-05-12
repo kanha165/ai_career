@@ -9,6 +9,17 @@ from app.models import user_model
 
 app = FastAPI(title="Career Prediction API 🚀")
 
+
+# ================= CORS =================
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 Base.metadata.create_all(bind=engine)
 
 
