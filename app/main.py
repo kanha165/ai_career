@@ -6,6 +6,7 @@ from app.routes.predict import router as predict_router
 from app.routes.protected import router as protected_router
 from app.routes.profile import router as profile_router
 from app.models import user_model  
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Career Prediction API 🚀")
 
