@@ -19,7 +19,6 @@ An intelligent AI-based system that recommends **personalized career paths** and
 - 🔒 JWT Protected Routes
 - ⚡ FastAPI High Performance Backend
 - 🌐 Interactive API Docs (Swagger UI)
-
 ---
 
 ## 🛠️ Tech Stack
